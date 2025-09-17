@@ -35,10 +35,6 @@ function App() {
     );
   };
 
-  const handleDeleteQuest = (id) => {
-    setQuests((prev) => prev.filter((q) => q.id !== id));
-  };
-
   const toggleQuestSelection = (id) => {
     setSelectedQuests((prev) =>
       prev.includes(id) ? prev.filter((q) => q !== id) : [...prev, id]
@@ -56,10 +52,22 @@ function App() {
     setSelectedQuests([]);
     setMultiSelectMode(false);
   };
+
   const handleBulkDelete = () => {
     setQuests((prev) => prev.filter((q) => !selectedQuests.includes(q.id)));
     setSelectedQuests([]);
     setMultiSelectMode(false);
+  };
+
+  const handleDeleteQuest = (id) => {
+    setQuests((prev) => prev.filter((q) => q.id !== id));
+  };
+
+  // helper function: switches tab & clears multi-select
+  const switchFilter = (newFilter) => {
+    setFilter(newFilter);
+    setMultiSelectMode(false);
+    setSelectedQuests([]);
   };
 
   const filteredQuests =
@@ -101,13 +109,13 @@ function App() {
         {/* Filters */}
         <div className="quest-filters">
           <button
-            onClick={() => setFilter("todo")}
+            onClick={() => switchFilter("todo")}
             className={filter === "todo" ? "active" : ""}
           >
             Active
           </button>
           <button
-            onClick={() => setFilter("completed")}
+            onClick={() => switchFilter("completed")}
             className={filter === "completed" ? "active" : ""}
           >
             Completed
@@ -118,18 +126,25 @@ function App() {
         <div className="bulk-actions">
           <button
             className="bulk-toggle"
-            onClick={() => setMultiSelectMode(!multiSelectMode)}
+            onClick={() => {
+              if (multiSelectMode) {
+                setSelectedQuests([]);
+              }
+              setMultiSelectMode(!multiSelectMode);
+            }}
           >
             {multiSelectMode ? "Cancel" : "Select"}
           </button>
 
           {multiSelectMode && (
             <>
-              <button className="bulk-complete" onClick={handleBulkComplete}>
-                Complete
-              </button>
+              {filter === "todo" && (
+                <button className="bulk-complete" onClick={handleBulkComplete}>
+                  Complete
+                </button>
+              )}
               <button className="bulk-delete" onClick={handleBulkDelete}>
-                Abort
+                {filter === "todo" ? "Abort" : "Delete"}
               </button>
             </>
           )}
