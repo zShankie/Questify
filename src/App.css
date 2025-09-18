@@ -125,13 +125,13 @@
   cursor: pointer;
   color: white;
   font-size: 1.5rem;
-  margin-left: 10px; /* space between buttons */
+  margin-left: 10px;
 }
 
 .icon-button:hover::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: 125%; /* tooltip shows above */
+  bottom: 125%;
   left: 50%;
   transform: translateX(-50%);
   background: #222;
@@ -143,4 +143,93 @@
   opacity: 0.9;
   pointer-events: none;
   z-index: 10;
+}
+
+.quest-item.selected {
+  background-color: rgba(100, 149, 237, 0.15);
+  border: 2px solid #6495ed;
+  border-radius: 8px;
+}
+
+/* General button styling */
+button {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 8px 14px;
+  margin: 4px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Primary action (Accept, Complete, etc.) */
+.alpha-button,
+.bulk-complete {
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+}
+
+.alpha-button:hover,
+.bulk-complete:hover {
+  background-color: #34d058;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(40, 167, 69, 0.4);
+}
+
+/* Secondary (Abort/Delete) */
+.bulk-delete {
+  background-color: #dc3545;
+  color: white;
+  font-weight: bold;
+}
+
+.bulk-delete:hover {
+  background-color: #ff4757;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
+}
+
+/* Neutral actions like Cancel, Filters */
+button.bulk-toggle,
+button.cancel,
+.quest-filters button {
+  background-color: #444;
+  color: white;
+}
+
+button.bulk-toggle:hover,
+.quest-filters button:hover {
+  background-color: #666;
+  transform: translateY(-2px);
+}
+
+/* Active filter button */
+.quest-filters button.active {
+  background-color: #28a745;
+  font-weight: bold;
+  color: white;
+}
+
+/* Icon buttons (Complete / Delete on each quest) */
+.icon-button {
+  background: none;
+  color: #bbb;
+  font-size: 1.2rem;
+  margin-left: 8px;
+}
+
+.icon-button:hover {
+  color: #28a745;
+}
+
+.icon-button[data-tooltip*="Abort"],
+.icon-button[data-tooltip*="Remove"] {
+  color: #bbb;
+}
+
+.icon-button[data-tooltip*="Abort"]:hover,
+.icon-button[data-tooltip*="Remove"]:hover {
+  color: #dc3545;
 }

@@ -153,7 +153,14 @@ function App() {
         {/* Quest list */}
         <div className="quest-list">
           {filteredQuests.map((quest) => (
-            <div key={quest.id} className="quest-item">
+            <div
+              key={quest.id}
+              className={`quest-item ${
+                multiSelectMode && selectedQuests.includes(quest.id)
+                  ? "selected"
+                  : ""
+              }`}
+            >
               {multiSelectMode && (
                 <input
                   type="checkbox"
